@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>SIGO</title>
+    <style>
+        :root {
+            font-family: Inter, Segoe UI, Arial, sans-serif;
+            color: #19283b;
+            background: #f3f6fa
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh
+        }
+
+        aside {
+            width: 245px;
+            background: #13253b;
+            color: #fff;
+            padding: 25px 15px;
+            flex-shrink: 0
+        }
+
+        .brand {
+            font-weight: 800;
+            font-size: 19px;
+            padding: 8px 12px 28px
+        }
+
+        .brand small {
+            display: block;
+            font-size: 11px;
+            color: #a9bacd;
+            margin-top: 7px;
+            font-weight: 400
+        }
+
+        nav button {
+            display: block;
+            width: 100%;
+            border: 0;
+            background: none;
+            color: #b8c8da;
+            text-align: left;
+            padding: 13px 14px;
+            border-radius: 9px;
+            cursor: pointer;
+            margin: 3px 0;
+            font-size: 14px
+        }
+
+        nav button.active,
+        nav button:hover {
+            background: #254363;
+            color: #fff
+        }
+
+        main {
+            flex: 1;
+            min-width: 0;
+            padding: 30px;
+            max-width: 1500px
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px
+        }
+
+        .top h1 {
+            margin: 0;
+            font-size: 26px
+        }
+
+        .sub {
+            color: #708094;
+            font-size: 13px;
+            margin-top: 7px
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 8px;
+            background: #1766b0;
+            color: white;
+            padding: 11px 16px;
+            cursor: pointer;
+            font-weight: 600
+        }
+
+        .btn.secondary {
+            background: #e5edf6;
+            color: #22486f
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px
+        }
+
+        .stat,
+        .panel {
+            background: #fff;
+            border: 1px solid #e4eaf1;
+            border-radius: 13px;
+            padding: 20px;
+            box-shadow: 0 3px 12px #23354a08
+        }
+
+        .stat .number {
+            font-size: 31px;
+            font-weight: 800;
+            margin: 12px 0 4px
+        }
+
+        .stat small {
+            color: #718197
+        }
+
+        .stat .tag {
+            font-size: 12px;
+            font-weight: 700
+        }
+
+        .blue {
+            color: #1766b0
+        }
+
+        .green {
+            color: #198754
+        }
+
+        .orange {
+            color: #d58410
+        }
+
+        .red {
+            color: #c73947
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 18px;
+            margin-top: 20px
+        }
+
+        .panel h3 {
+            margin: 0 0 18px;
+            font-size: 17px
+        }
+
+        .barrow {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 14px 0;
+            font-size: 13px
+        }
+
+        .barrow span {
+            width: 115px
+        }
+
+        .track {
+            flex: 1;
+            height: 11px;
+            background: #eaf0f6;
+            border-radius: 10px;
+            overflow: hidden
+        }
+
+        .fill {
+            height: 100%;
+            background: #2475bc;
+            border-radius: 10px
+        }
+
+        .barrow b {
+            width: 30px;
+            text-align: right
+        }
+
+        .tablewrap {
+            overflow: auto
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 0 0 16px
+        }
+
+        input,
+        select,
+        textarea {
+            border: 1px solid #d8e2ed;
+            border-radius: 8px;
+            padding: 11px 12px;
+            font: inherit;
+            background: white;
+            min-width: 0
+        }
+
+        input[type=search] {
+            min-width: 270px;
+            flex: 1
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 13px;
+            white-space: nowrap
+        }
+
+        th {
+            text-align: left;
+            color: #77869a;
+            font-weight: 700;
+            background: #f7f9fc
+        }
+
+        td,
+        th {
+            padding: 14px 12px;
+            border-bottom: 1px solid #edf1f5
+        }
+
+        td a {
+            color: #1766b0;
+            cursor: pointer;
+            font-weight: 700
+        }
+
+        .pill {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            background: #eaf2fb;
+            color: #246bb0
+        }
+
+        .pill.Atendido {
+            background: #e6f6ed;
+            color: #16824b
+        }
+
+        .pill.Vencido {
+            background: #fce9eb;
+            color: #bb3043
+        }
+
+        .pill.Pendiente {
+            background: #fff1da;
+            color: #aa7013
+        }
+
+        .hidden {
+            display: none !important
+        }
+
+        .formgrid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            font-size: 13px;
+            font-weight: 600
+        }
+
+        .wide {
+            grid-column: 1/-1
+        }
+
+        .empty {
+            padding: 30px;
+            text-align: center;
+            color: #7a8897
+        }
+
+        .notice {
+            background: #eaf3fd;
+            color: #315f8c;
+            padding: 13px;
+            border-radius: 9px;
+            font-size: 13px;
+            margin: 0 0 18px
+        }
+
+        .muted {
+            color: #738197;
+            font-size: 13px
+        }
+
+        .activity {
+            padding: 13px 0;
+            border-bottom: 1px solid #edf1f5;
+            font-size: 13px
+        }
+
+        .activity b {
+            display: block;
+            margin-bottom: 5px
+        }
+
+        @media(max-width:850px) {
+            aside {
+                width: 70px;
+                padding: 18px 6px
+            }
+
+            .brand {
+                font-size: 0;
+                padding: 12px 4px 30px
+            }
+
+            .brand:before {
+                content: 'CG';
+                font-size: 18px
+            }
+
+            .brand small {
+                display: none
+            }
+
+            nav button {
+                font-size: 0;
+                text-align: center;
+                padding: 15px 4px
+            }
+
+            nav button:before {
+                content: attr(data-short);
+                font-size: 15px
+            }
+
+            main {
+                padding: 18px
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .grid {
+                grid-template-columns: 1fr
+            }
+
+            .top h1 {
+                font-size: 22px
+            }
+        }
+
+        @media(max-width:500px) {
+            .stats {
+                gap: 8px
+            }
+
+            .stat {
+                padding: 14px
+            }
+
+            .stat .number {
+                font-size: 25px
+            }
+
+            .formgrid {
+                grid-template-columns: 1fr
+            }
+
+            .top {
+                align-items: flex-start;
+                flex-direction: column
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="js-check"
+        style="position:fixed;bottom:12px;right:12px;z-index:9999;background:#fff3cd;color:#664d03;border:1px solid #ffecb5;padding:10px 14px;border-radius:8px;font:13px Arial;max-width:300px">
+        JavaScript no se está ejecutando. Comprueba los permisos del navegador.</div>
+    <div class="layout">
+        <aside>
+            <div class="brand">Sistema Integral de Gestión de Oficios</div>
+            <nav><button class="active" data-short="▦" data-page="dashboard">▦ &nbsp; Home </button><button
+                    data-short="▤" data-page="oficios">▤ &nbsp; Gestión de oficios</button><button data-short="＋"
+                    data-page="nuevo">＋ &nbsp; Registrar oficio</button><button data-short="◷" data-page="seguimiento">◷
+                    &nbsp; Seguimiento</button><button data-short="▥" data-page="reportes">▥ &nbsp;
+                    Reportes</button><button data-short="⚙" data-page="usuarios">⚙ &nbsp; Usuarios y permisos</button>
+            </nav>
+        </aside>
+        <main>
+            <header class="top">
+                <div>
+                    <h1 id="title">Home</h1>
+            </header>
+            <section id="dashboard">
+                <div class="stats">
+                    <div class="stat"><small>Total de oficios</small>
+                        <div class="number blue" id="total">0</div><span class="tag blue">Registros generales</span>
+                    </div>
+                    <div class="stat"><small>Atendidos</small>
+                        <div class="number green" id="attended">0</div><span class="tag green">Gestión concluida</span>
+                    </div>
+                    <div class="stat"><small>Pendientes</small>
+                        <div class="number orange" id="pending">0</div><span class="tag orange">En seguimiento</span>
+                    </div>
+                    <div class="stat"><small>Vencidos</small>
+                        <div class="number red" id="overdue">0</div><span class="tag red">Requieren atención</span>
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="panel">
+                        <h3>Estado de atención</h3>
+                        <div id="bars"></div>
+                    </div>
+                    <div class="panel">
+                        <h3>Actividad reciente</h3>
+                        <div id="activity"></div>
+                    </div>
+                </div>
+                <div class="panel" style="margin-top:20px">
+                    <h3>Oficios recientes</h3>
+                    <div class="tablewrap" id="recent"></div>
+                </div>
+            </section>
+            <section id="oficios" class="hidden">
+                <div class="panel">
+                    <h3>Consulta y administración de oficios</h3>
+                    <div class="toolbar"><input id="search" type="search"
+                            placeholder="Buscar folio, asunto, remitente o área"><select id="filter">
+                            <option value="">Todos los estados</option>
+                            <option>Pendiente</option>
+                            <option>En proceso</option>
+                            <option>Atendido</option>
+                            <option>Vencido</option>
+                        </select><button class="btn secondary" id="export">Exportar CSV</button></div>
+                    <div class="tablewrap" id="alltable"></div>
+                </div>
+            </section>
+            <section id="nuevo" class="hidden">
+                <div class="panel">
+                    <h3>Registro de nuevo oficio</h3>
+
+                    <form id="form" class="formgrid"><label class="field">Número de oficio<input name="folio" required
+                                placeholder="Ej. OF-2026-007"></label><label class="field">Fecha de recepción<input
+                                name="fecha" type="date" required></label><label class="field">Remitente<input
+                                name="remitente" required></label><label class="field">Área responsable<input
+                                name="area" required></label><label class="field wide">Asunto<textarea name="asunto"
+                                rows="3" required></textarea></label><label class="field">Fecha límite<input
+                                name="limite" type="date" required></label><label class="field">Estado<select
+                                name="estado">
+                                <option>Pendiente</option>
+                                <option>En proceso</option>
+                                <option>Atendido</option>
+                            </select></label><label class="field wide">Documento PDF (demostración, no se
+                            almacena)<input name="pdf" type="file" accept="application/pdf"></label>
+                        <div class="wide"><button class="btn" type="submit">Guardar oficio</button></div>
+                    </form>
+                </div>
+            </section>
+            <section id="seguimiento" class="hidden">
+                <div class="panel">
+                    <h3>Seguimiento y vencimientos</h3>
+                    <p class="muted">Oficios que requieren atención y su estado actual.</p>
+                    <div class="tablewrap" id="tracking"></div>
+                </div>
+            </section>
+            <section id="reportes" class="hidden">
+                <div class="panel">
+                    <h3>Reportes de gestión</h3>
+                    <p class="muted">Resumen actualizado de los registros de esta demostración.</p>
+                    <div id="reportcontent"></div><button class="btn" onclick="downloadCSV()">Descargar reporte
+                        CSV</button>
+                </div>
+            </section>
+            <section id="usuarios" class="hidden">
+                <div class="panel">
+                    <h3>Usuarios y permisos</h3>
+                    <p class="notice">Vista conceptual. El inicio de sesión, roles y autenticación requieren un backend
+                        para la versión definitiva.</p>
+                    <div class="tablewrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Rol</th>
+                                    <th>Permisos previstos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Administrador</td>
+                                    <td>Gestionar usuarios, oficios y reportes</td>
+                                </tr>
+                                <tr>
+                                    <td>Capturista</td>
+                                    <td>Registrar y consultar oficios</td>
+                                </tr>
+                                <tr>
+                                    <td>Responsable</td>
+                                    <td>Consultar asignaciones y actualizar seguimiento</td>
+                                </tr>
+                                <tr>
+                                    <td>Consulta</td>
+                                    <td>Visualizar información autorizada</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script>window.addEventListener('error', function (e) { var b = document.getElementById('js-check'); if (b) { b.style.display = 'block'; b.style.background = '#fce9eb'; b.style.color = '#9b2434'; b.textContent = 'Error JavaScript: ' + e.message + ' (línea ' + e.lineno + ')'; } }); document.getElementById('js-check').style.display = 'none'; const seed = [{ folio: 'OF-2026-001', fecha: '2026-10-12', remitente: 'Dirección General', area: 'Administración', asunto: 'Solicitud de información administrativa', limite: '2026-10-20', estado: 'Vencido' }, { folio: 'OF-2026-002', fecha: '2026-10-14', remitente: 'Coordinación Técnica', area: 'Tecnologías de Información', asunto: 'Actualización de inventario de equipos', limite: '2026-10-29', estado: 'En proceso' }, { folio: 'OF-2026-003', fecha: '2026-10-15', remitente: 'Subdirección Operativa', area: 'Operaciones', asunto: 'Informe de actividades trimestrales', limite: '2026-10-21', estado: 'Atendido' }, { folio: 'OF-2026-004', fecha: '2026-10-18', remitente: 'Dirección Jurídica', area: 'Jurídico', asunto: 'Revisión de documentación institucional', limite: '2026-10-30', estado: 'Pendiente' }, { folio: 'OF-2026-005', fecha: '2026-10-20', remitente: 'Unidad Administrativa', area: 'Administración', asunto: 'Remisión de documentación para validación', limite: '2026-10-22', estado: 'Vencido' }, { folio: 'OF-2026-006', fecha: '2026-10-22', remitente: 'Coordinación General', area: 'Planeación', asunto: 'Solicitud de reporte de seguimiento', limite: '2026-11-04', estado: 'Pendiente' }]; let rows; try { rows = JSON.parse(localStorage.getItem('oficios_demo_v1')) || seed } catch (e) { rows = seed } const safe = x => String(x ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); function status(r) { return r.estado !== 'Atendido' && r.limite < new Date().toLocaleDateString('en-CA') ? 'Vencido' : r.estado } function tab(data) { return '<table><thead><tr><th>Folio</th><th>Recepción</th><th>Asunto</th><th>Área responsable</th><th>Fecha límite</th><th>Estado</th></tr></thead><tbody>' + data.map(r => '<tr><td><a title="Ver detalles" data-folio="' + safe(r.folio) + '">' + safe(r.folio) + '</a></td><td>' + safe(r.fecha) + '</td><td>' + safe(r.asunto) + '</td><td>' + safe(r.area) + '</td><td>' + safe(r.limite) + '</td><td><span class="pill ' + safe(status(r)) + '">' + safe(status(r)) + '</span></td></tr>').join('') + '</tbody></table>' } function render() { let c = s => rows.filter(r => status(r) === s).length; document.getElementById('total').textContent = rows.length; document.getElementById('attended').textContent = c('Atendido'); document.getElementById('pending').textContent = c('Pendiente') + c('En proceso'); document.getElementById('overdue').textContent = c('Vencido'); document.getElementById('bars').innerHTML = ['Atendido', 'En proceso', 'Pendiente', 'Vencido'].map(s => '<div class="barrow"><span>' + s + '</span><div class="track"><div class="fill" style="width:' + (rows.length ? c(s) / rows.length * 100 : 0) + '%;background:' + (s === 'Vencido' ? '#cb4652' : s === 'Atendido' ? '#2b9d6d' : '#2475bc') + '"></div></div><b>' + c(s) + '</b></div>').join(''); document.getElementById('activity').innerHTML = rows.slice(-4).reverse().map(r => '<div class="activity"><b>' + safe(r.folio) + '</b>' + safe(r.asunto) + '<div class="muted">' + safe(status(r)) + ' · ' + safe(r.fecha) + '</div></div>').join(''); document.getElementById('recent').innerHTML = tab(rows.slice(-5).reverse()); let q = document.getElementById('search').value.toLowerCase(), f = document.getElementById('filter').value; document.getElementById('alltable').innerHTML = tab(rows.filter(r => (!f || status(r) === f) && [r.folio, r.asunto, r.remitente, r.area].some(x => x.toLowerCase().includes(q)))); document.getElementById('tracking').innerHTML = tab(rows.filter(r => status(r) !== 'Atendido').sort((a, b) => a.limite.localeCompare(b.limite))); document.getElementById('reportcontent').innerHTML = '<p>Total: <b>' + rows.length + '</b> · Atendidos: <b>' + c('Atendido') + '</b> · Pendientes: <b>' + (c('Pendiente') + c('En proceso')) + '</b> · Vencidos: <b>' + c('Vencido') + '</b></p>' } function page(id) { document.querySelectorAll('main section').forEach(s => s.classList.toggle('hidden', s.id !== id)); document.querySelectorAll('nav button').forEach(b => b.classList.toggle('active', b.dataset.page === id)); document.getElementById('title').textContent = ({ dashboard: 'Panel principal', oficios: 'Gestión de oficios', nuevo: 'Registrar oficio', seguimiento: 'Seguimiento', reportes: 'Reportes', usuarios: 'Usuarios y permisos' })[id]; render() } document.querySelectorAll('nav button').forEach(b => b.onclick = () => page(b.dataset.page)); document.getElementById('newTop').onclick = () => page('nuevo'); document.getElementById('search').oninput = render; document.getElementById('filter').onchange = render; document.getElementById('form').onsubmit = e => { e.preventDefault(); let x = Object.fromEntries(new FormData(e.target)); if (rows.some(r => r.folio === x.folio)) { alert('Ya existe ese número de oficio'); return } delete x.pdf; rows.push(x); try { localStorage.setItem('oficios_demo_v1', JSON.stringify(rows)) } catch { } e.target.reset(); alert('Oficio registrado en la demostración'); page('oficios') }; document.addEventListener('click', e => { let a = e.target.closest('[data-folio]'); if (a) { let r = rows.find(r => r.folio === a.dataset.folio); if (r) alert('OFICIO: ' + r.folio + '\nASUNTO: ' + r.asunto + '\nREMITENTE: ' + r.remitente + '\nÁREA: ' + r.area + '\nESTADO: ' + status(r) + '\nFECHA LÍMITE: ' + r.limite) } }); function downloadCSV() { let h = ['folio', 'fecha', 'remitente', 'area', 'asunto', 'limite', 'estado'], csv = [h.join(','), ...rows.map(r => h.map(k => '"' + String(k === 'estado' ? status(r) : r[k] || '').replace(/"/g, '""') + '"').join(','))].join('\r\n'); let a = document.createElement('a'), url = URL.createObjectURL(new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' })); a.href = url; a.download = 'reporte_oficios.csv'; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000) } document.getElementById('export').onclick = downloadCSV; document.querySelector('[name=fecha]').value = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10); render();</script>
+</body>
+
+</html>
